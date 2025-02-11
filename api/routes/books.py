@@ -2,6 +2,7 @@ from typing import OrderedDict
 
 from fastapi import APIRouter, status
 from fastapi.responses import JSONResponse
+from fastapi.exceptions import HTTPException
 
 from api.db.schemas import Book, Genre, InMemoryDB
 
@@ -64,7 +65,14 @@ async def delete_book(book_id: int) -> None:
 
 @router.get("/{book_id}", response_model=Book, status_code=status.HTTP_200_OK)
 async def get_book_by_id(book_id: int) -> Book:
+    book = db.get_book(book_id)
+    if not book:
+        raise not_found()
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content=db.get_book(book_id).model_dump(),
+        content=book.model_dump(),
     )
+
+
+def not_found():
+    return HTTPException(status_code=404, detail="Resource not found")
