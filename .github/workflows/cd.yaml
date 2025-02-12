@@ -33,10 +33,9 @@ jobs:
     - name: Deploy to VM
       run: |
         ssh ${{ secrets.VM_USERNAME }}@${{ secrets.VM_HOST }} '
-          sudo cd ${{ secrets.PATH_TO_APP }}  &&
+          cd ${{ secrets.PATH_TO_APP }}  &&
           git pull &&
           source venv/bin/activate &&
           pip install -r requirements.txt &&
           uvicorn main:app 
-          sudo systemctl restart nginx
         '
