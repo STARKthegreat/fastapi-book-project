@@ -1,3 +1,4 @@
+name: Fast API Book
 on:
   push:
     branches:
