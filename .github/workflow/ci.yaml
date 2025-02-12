@@ -5,7 +5,7 @@ on:
   pull_request:
     branches:
       - main
-      - develop
+      - fix/get_individual_books
 jobs:
   test:
     runs-on: ubuntu-latest
